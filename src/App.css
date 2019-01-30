@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: burlywood;
+    width: 96%;
+    height: 100%;
+    margin: 0% 2% 0% 2%;
+}
+
+.currencyview-wrapper {
+    width: 100%;
+    height: 84%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chartview-wrapper {
+    width: 100%;
+    height: 33%;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+}
