@@ -4,3 +4,13 @@
     margin-bottom: 2%;
     background-color: aquamarine;
 }
+
+@media (min-width: 720px) {
+    .currency-container {
+        max-width: 340px;
+        height: 180px;
+        margin: 0px 10px 0px 10px;
+        box-sizing: border-box;
+        align-self: flex-end;
+    }
+}

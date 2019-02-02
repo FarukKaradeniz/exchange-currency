@@ -23,3 +23,24 @@ h2 {
     margin: 0;
     padding: 0;
 }
+
+@media (min-width: 720px) {
+    .container {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .currencyview-wrapper {
+        width: 720px;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-self: center;
+    }
+
+    .chartview-wrapper {
+        max-width: 360px;
+        height: 180px;
+        align-self: center;
+        margin: auto;
+    }
+}
