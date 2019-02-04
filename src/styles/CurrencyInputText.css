@@ -9,11 +9,12 @@
     height: 100%;
     border-radius: 10px 0px 0px 10px;
     border: 0px;
-    background: rgb(255, 0, 0);
     line-height: normal;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 28px;
+    font-family: 'Delius Unicase', sans-serif;
     color: #050417;
     padding-left: 8px;
+    border: 2px solid rgb(223, 223, 223);
+    border-right-width: 0px;
     box-sizing: border-box;
 }
