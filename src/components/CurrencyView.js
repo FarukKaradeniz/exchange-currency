@@ -9,8 +9,11 @@ export default class CurrencyView extends React.Component {
   render() {
     return(
       <div className="currency-container">
-        <h2>CurrencyView({this.props.v})</h2>
-        <CurrencyInputText />
+        <CurrencyInputText 
+          name={this.props.name}
+          value={this.props.value}
+          handleChange={this.props.handleChange} 
+        />
         <CurrencySelectList />
       </div>
     );

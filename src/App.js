@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
 
 import CurrencyView from './components/CurrencyView';
 import ChartView from './components/ChartView';
@@ -7,33 +8,65 @@ import Footer from './components/Footer';
 
 import './App.css';
 
+
+const baseCurrency = {
+	value: 1,
+	currency: 'EUR'
+}; 
+
+const currencies = [ //burada sadece base currency olacak, digerleri API isteginden sonra eklenecek
+  baseCurrency,
+];
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstCurrency: 1,
-      secondCurrency: 1,  
+      currencies: currencies,
+      firstCurrencyIndex: 0, //ilk input listede seçilen kur. default 0 olacak
+      secondCurrencyIndex: 0,  //ikinci input listede seçilen kur. default 0 olacak
+      firstCurrencyValue: 1, //ilk inputtaki değer. default 1 olacak
+      secondCurrencyValue: 1, //ikinci inputtaki değer. default 1 olacak
     };
 
   }
 
-  onCurrencyChanged = (e) => {
-    if (e.target.name === 'firstCurrency') {
-      const firstVal = e.target.value;
+  onCurrencyValueChanged = (e) => {
+    if (e.target.name === 'firstCurrencyValue') {
+      const newValue = e.target.value;
+      const selectedCurrency = this.state.secondCurrencyIndex;
       this.setState({ 
         [e.target.name]: e.target.value,
-        secondCurrency: firstVal * 5.21,
+        secondCurrencyValue: (newValue * currencies[selectedCurrency].value),
       }); //Sets the new value
     }
-    else { //e.target.name === 'secondCurrency'
-      const secondVal = e.target.value;
+    else { //e.target.name === 'secondCurrencyValue'
+      const newValue = e.target.value;
+      const selectedCurrency = this.state.secondCurrencyIndex;
       this.setState({ 
         [e.target.name]: e.target.value,
-        firstCurrency: secondVal * 0.19,
+        firstCurrencyValue: (newValue / currencies[selectedCurrency].value),
       }); //Sets the new value
     }
 
   };
+
+  componentWillMount = () => {
+    Axios({
+      method: 'get',
+      url:'https://api.exchangeratesapi.io/latest'
+    }).then(reponse => {
+      const rates = reponse.data.rates;
+      Object.keys(reponse.data.rates).map(key => {
+        return {name: key, value: rates[key]};
+      }).forEach(rate => currencies.push(rate));
+      
+      this.setState({
+        currencies: currencies
+      });
+    }).catch(err => console.log(err));
+  }
+
 
   render() {
     return (
@@ -41,14 +74,14 @@ class App extends Component {
         <Header />
         <div className="currencyview-wrapper">
           <CurrencyView 
-            name={'firstCurrency'}
-            value={this.state.firstCurrency}
-            handleChange={this.onCurrencyChanged} 
+            name={'firstCurrencyValue'}
+            value={this.state.firstCurrencyValue}
+            handleChange={this.onCurrencyValueChanged} 
           />
           <CurrencyView 
-            name={'secondCurrency'}
-            value={this.state.secondCurrency}
-            handleChange={this.onCurrencyChanged} 
+            name={'secondCurrencyValue'}
+            value={this.state.secondCurrencyValue}
+            handleChange={this.onCurrencyValueChanged} 
           />
           <div className="chartview-wrapper">
             <ChartView />
