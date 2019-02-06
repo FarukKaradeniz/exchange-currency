@@ -16,6 +16,7 @@
 .chartview-wrapper {
     width: 100%;
     height: 32%;
+    /* burası listopen olduğunda z-index -100 gibi bişey olacak */
 }
 
 h2 {

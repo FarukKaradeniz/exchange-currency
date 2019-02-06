@@ -14,7 +14,12 @@ export default class CurrencyView extends React.Component {
           value={this.props.value}
           handleChange={this.props.handleChange} 
         />
-        <CurrencySelectList />
+        <CurrencySelectList 
+          listName={this.props.listName}
+          currencies={this.props.currencies}
+          selectedCurrency={this.props.selectedCurrency}
+          currencySelectEvent={this.props.currencySelectEvent}
+        />
       </div>
     );
   }

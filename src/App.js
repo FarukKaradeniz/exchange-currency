@@ -11,7 +11,7 @@ import './App.css';
 
 const baseCurrency = {
 	value: 1,
-	currency: 'EUR'
+	name: 'EUR'
 }; 
 
 const currencies = [ //burada sadece base currency olacak, digerleri API isteginden sonra eklenecek
@@ -48,7 +48,23 @@ class App extends Component {
         firstCurrencyValue: (newValue / currencies[selectedCurrency].value),
       }); //Sets the new value
     }
+  };
 
+  onCurrencySelected = (index, listName) => {
+    if(listName === 'firstCurrencyIndex') {
+      const secondCurrencyValue = this.state.firstCurrencyValue / currencies[index].value;
+      this.setState({
+        [listName]: index,
+        secondCurrencyValue: secondCurrencyValue
+      });
+    }
+    else { // listName === 'secondCurrencyIndex'
+      const firstCurrencyValue = this.state.secondCurrencyValue / currencies[index].value;
+      this.setState({
+        [listName]: index,
+        firstCurrencyValue: firstCurrencyValue
+      });
+    }
   };
 
   componentWillMount = () => {
@@ -77,11 +93,19 @@ class App extends Component {
             name={'firstCurrencyValue'}
             value={this.state.firstCurrencyValue}
             handleChange={this.onCurrencyValueChanged} 
+            listName={"firstCurrencyIndex"}
+            currencies={this.state.currencies}
+            selectedCurrency={this.state.firstCurrencyIndex}
+            currencySelectEvent={this.onCurrencySelected}
           />
           <CurrencyView 
             name={'secondCurrencyValue'}
             value={this.state.secondCurrencyValue}
             handleChange={this.onCurrencyValueChanged} 
+            listName={"secondCurrencyIndex"}
+            currencies={this.state.currencies}
+            selectedCurrency={this.state.secondCurrencyIndex}
+            currencySelectEvent={this.onCurrencySelected}
           />
           <div className="chartview-wrapper">
             <ChartView />
