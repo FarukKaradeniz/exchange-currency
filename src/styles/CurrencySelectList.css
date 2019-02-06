@@ -5,43 +5,44 @@
     border-radius: 0px 10px 10px 0px;
     box-sizing: border-box;
     align-self: center;
-    overflow-y: scroll;
+    font-family: 'Lato';
+    position: relative;
+    display: inline-block;
 }
 
 .currency-select-list {
-    
-    display: flex;
-    align-items: center;
-    flex-flow: row wrap;
-    justify-content: center;
     text-align: center;
     width: 100%;
-    height: 100%;
+    height: 140px;
     line-height: normal;
-    font-size: 14px;
     font-weight: bold;
     color: #050417;
-    box-sizing: border-box;
+    background-color: #f1f1f1;
     z-index: 100;
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+    list-style-type: none;
 }
 
 .currency-list-header {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 26px;
     height: 100%;
     width: 100%;
 }
 
-.currency-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  z-index: 100;
+.currency-item {
+    margin: 0;
+    padding: 10px 0 0 10%;
+    font-size: 14px;
+    display: block;
 }
 
-.currency-item {
-
+.currency-item:hover {
+    background-color: #bbbbbb;
 }
 
 .hidden {

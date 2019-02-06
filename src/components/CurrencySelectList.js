@@ -31,20 +31,18 @@ export default class CurrencySelectList extends React.Component {
               </li>
     });
 
-    return <ul className={`currency-list ${this.state.listOpen ? '' : ' hidden'}`}>{currencies}</ul>
+    return <ul className={`currency-select-list ${this.state.listOpen ? '' : ' hidden'}`}>{currencies}</ul>
   }
   
   render() {
     return(
       <div className="currency-select-list-wrapper">
-        <div className="currency-select-list">
-          <div 
-            onClick={() => this.toggleList()}
-            className="currency-list-header">
-            {this.props.currencies[this.props.selectedCurrency].name}
-          </div>
-          {this.currencyList()}
+        <div 
+          onClick={() => this.toggleList()}
+          className="currency-list-header">
+          {this.props.currencies[this.props.selectedCurrency].name}
         </div>
+        {this.currencyList()}
       </div>
     );
   }
