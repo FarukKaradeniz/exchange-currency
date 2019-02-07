@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import moment from 'moment';
 
 import CurrencyView from './components/CurrencyView';
 import ChartView from './components/ChartView';
@@ -18,6 +19,8 @@ const currencies = [ //burada sadece base currency olacak, digerleri API istegin
   baseCurrency,
 ];
 
+let data = {}; 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -27,8 +30,72 @@ class App extends Component {
       secondCurrencyIndex: 0,  //ikinci input listede seçilen kur. default 0 olacak
       firstCurrencyValue: 1, //ilk inputtaki değer. default 1 olacak
       secondCurrencyValue: 1, //ikinci inputtaki değer. default 1 olacak
+      weekDataExist: false, // chartview ilk başta görünmeyecek
+      weekData: [], //weekdata saklanacagi yer
+      labels: [], //weekdata labellar
     };
 
+  }
+
+  getDataForDate = (date) => {
+    const firstCurrency = this.state.firstCurrencyIndex;
+    const secondCurrency = this.state.secondCurrencyIndex;
+    const dataForDate = data[date];
+    let rate = 0;
+    if (firstCurrency === 0 && secondCurrency === 0) {
+      rate = 1;
+    }
+    else if (firstCurrency === 0 && secondCurrency !== 0) {
+      rate = dataForDate[this.state.currencies[secondCurrency].name];
+    }
+    else if (firstCurrency !== 0 && secondCurrency === 0) {
+      rate = 1 / dataForDate[this.state.currencies[firstCurrency].name];
+    }
+    else {
+      rate = dataForDate[this.state.currencies[firstCurrency].name] / dataForDate[this.state.currencies[secondCurrency].name];
+    }
+    return rate;
+  };
+
+  updateChart = () => {
+    const labels = this.state.labels;
+    const weekData = [];
+    labels.forEach(label => {
+      const rate = this.getDataForDate(label);
+      weekData.push(rate);
+    });
+    this.setState({
+      weekData: weekData,
+    });
+  }
+
+  getWeekCurrencyData = () => {
+    const dateFrom = moment().subtract(6,'days').format('YYYY-MM-DD');
+    const dateTo = moment().format('YYYY-MM-DD');
+
+    Axios({
+      method: 'get',
+      url: 'https://api.exchangeratesapi.io/history',
+      params: {
+        start_at: dateFrom,
+        end_at: dateTo
+      }
+    }).then(response => {
+      data = response.data.rates;
+      const weekLabels = [];
+      const weekData = [];
+      Object.keys(data).sort().forEach(label => {
+        weekLabels.push(label);
+        const rate = this.getDataForDate(label);
+        weekData.push(rate);
+      });
+
+      this.setState({
+        weekDataExist: true,
+        labels: weekLabels.sort(),
+        weekData: weekData,
+      });
+    }).catch(err => console.log(err));
   }
 
   onCurrencyValueChanged = (e) => {
@@ -56,14 +123,14 @@ class App extends Component {
       this.setState({
         [listName]: index,
         secondCurrencyValue: secondCurrencyValue
-      });
+      }, () => this.updateChart());
     }
     else { // listName === 'secondCurrencyIndex'
       const firstCurrencyValue = this.state.secondCurrencyValue / currencies[index].value;
       this.setState({
         [listName]: index,
         firstCurrencyValue: firstCurrencyValue
-      });
+      }, () => this.updateChart());
     }
   };
 
@@ -79,6 +146,8 @@ class App extends Component {
       
       this.setState({
         currencies: currencies
+      }, () => {
+        this.getWeekCurrencyData();
       });
     }).catch(err => console.log(err));
   }
@@ -108,7 +177,15 @@ class App extends Component {
             currencySelectEvent={this.onCurrencySelected}
           />
           <div className="chartview-wrapper">
-            <ChartView />
+            <ChartView data={{
+              labels: this.state.labels, // tarih bilgileri
+              datasets: [
+                {
+                  data: this.state.weekData, // oranların datası
+                  label: `${this.state.currencies[this.state.firstCurrencyIndex].name}/${this.state.currencies[this.state.secondCurrencyIndex].name}`,
+                }
+              ],
+            }} />
           </div>
         </div>        
         <Footer />
