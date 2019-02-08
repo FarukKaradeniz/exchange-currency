@@ -1,13 +1,13 @@
 .currency-select-list-wrapper {
     width: 20%;
     height: 100px;
-    border: 2px solid rgb(255, 244, 93);
+    border: 3px solid rgb(157, 227, 255);
     border-radius: 0px 10px 10px 0px;
     box-sizing: border-box;
     align-self: center;
     font-family: 'Lato';
     position: relative;
-    display: inline-block;
+    cursor: pointer;
 }
 
 .currency-select-list {
