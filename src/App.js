@@ -52,7 +52,7 @@ class App extends Component {
       rate = 1 / dataForDate[this.state.currencies[firstCurrency].name];
     }
     else {
-      rate = dataForDate[this.state.currencies[firstCurrency].name] / dataForDate[this.state.currencies[secondCurrency].name];
+      rate = dataForDate[this.state.currencies[secondCurrency].name] / dataForDate[this.state.currencies[firstCurrency].name];
     }
     return rate;
   };
@@ -118,18 +118,21 @@ class App extends Component {
   };
 
   onCurrencySelected = (index, listName) => {
+    if (this.state[listName] === index) { // not changing the selected currencies
+      return;
+    }
     if(listName === 'firstCurrencyIndex') {
-      const secondCurrencyValue = this.state.firstCurrencyValue / currencies[index].value;
+      const secondCurrencyValue = this.state.firstCurrencyValue * (currencies[this.state.secondCurrencyIndex].value / currencies[index].value);
       this.setState({
         [listName]: index,
         secondCurrencyValue: secondCurrencyValue
       }, () => this.updateChart());
     }
     else { // listName === 'secondCurrencyIndex'
-      const firstCurrencyValue = this.state.secondCurrencyValue / currencies[index].value;
+      const secondCurrencyValue = this.state.firstCurrencyValue * (currencies[index].value / currencies[this.state.firstCurrencyIndex].value);
       this.setState({
         [listName]: index,
-        firstCurrencyValue: firstCurrencyValue
+        secondCurrencyValue: secondCurrencyValue
       }, () => this.updateChart());
     }
   };
