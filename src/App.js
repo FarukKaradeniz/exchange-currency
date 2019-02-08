@@ -104,15 +104,15 @@ class App extends Component {
       const selectedCurrency = this.state.secondCurrencyIndex;
       this.setState({ 
         [e.target.name]: e.target.value,
-        secondCurrencyValue: (newValue * currencies[selectedCurrency].value),
+        secondCurrencyValue: (newValue * (currencies[selectedCurrency].value / currencies[this.state.firstCurrencyIndex].value)).toFixed(4),
       }); //Sets the new value
     }
     else { //e.target.name === 'secondCurrencyValue'
       const newValue = e.target.value;
-      const selectedCurrency = this.state.secondCurrencyIndex;
+      const selectedCurrency = this.state.firstCurrencyIndex;
       this.setState({ 
         [e.target.name]: e.target.value,
-        firstCurrencyValue: (newValue / currencies[selectedCurrency].value),
+        firstCurrencyValue: (newValue * (currencies[selectedCurrency].value / currencies[this.state.secondCurrencyIndex].value)).toFixed(4),
       }); //Sets the new value
     }
   };
