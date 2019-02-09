@@ -2,9 +2,11 @@
   "name": "exchange-currency",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://farukkaradeniz.github.io/exchange-currency/",
   "dependencies": {
     "axios": "^0.18.0",
     "chart.js": "^2.7.3",
+    "gh-pages": "^2.0.1",
     "moment": "^2.24.0",
     "react": "16.7.0",
     "react-chartjs-2": "^2.7.4",
@@ -15,6 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
