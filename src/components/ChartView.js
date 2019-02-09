@@ -7,7 +7,10 @@ export default class ChartView extends React.Component {
   render() {
     return(
       <div className="chart-container">
-        <Line data={this.props.data} />
+        <Line 
+          maxWidth={360}
+          maxHeight={180}
+          data={this.props.data} />
       </div>
     );
   }

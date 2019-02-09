@@ -5,7 +5,6 @@ import moment from 'moment';
 import CurrencyView from './components/CurrencyView';
 import ChartView from './components/ChartView';
 import Header from './components/Header';
-import Footer from './components/Footer';
 
 import './App.css';
 
@@ -184,14 +183,18 @@ class App extends Component {
               labels: this.state.labels, // tarih bilgileri
               datasets: [
                 {
+                  backgroundColor: "rgba(157, 227, 255, 0.4)",
+                  borderColor: "rgba(157, 227, 255, 1)",
+                  pointBackgroundColor: "rgba(107, 127, 255, 1)",
+                  fill: false,
+                  lineTension: 0.1,
                   data: this.state.weekData, // oranların datası
                   label: `${this.state.currencies[this.state.firstCurrencyIndex].name}/${this.state.currencies[this.state.secondCurrencyIndex].name}`,
                 }
               ],
             }} />
           </div>
-        </div>        
-        <Footer />
+        </div>
       </main>
     );
   }
