@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/FarukKaradeniz/exchange-currency/precache-manifest.4350971337bbc9a8e52a9d8b835840d3.js"
+  "/exchange-currency/precache-manifest.ebbccd37ac951ec997fae4d568e2e7cd.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/FarukKaradeniz/exchange-currency/index.html", {
+workbox.routing.registerNavigationRoute("/exchange-currency/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
