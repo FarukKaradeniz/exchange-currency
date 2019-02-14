@@ -2,3 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Screenshot
 ![Screenshot website](/assets/ss_exchange-currency.PNG)
+
+
+---
+Thanks to https://exchangeratesapi.io/
